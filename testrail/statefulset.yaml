@@ -35,4 +35,4 @@ spec:
     spec:
       containers:
         - name: testrail
-          image: voilatiel/testrail
+          image: voilatiel/testrail:null
