@@ -1,9 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: testrail
+  labels:
+    app: testrail
+spec:
+  ports:
+  - port: 80
+    name: web
+  clusterIP: None
+  selector:
+    app: testrail
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: testrail
   labels:
-    app: web
+    app: testrail
 spec:
   selector:
     matchLabels:
