@@ -1,0 +1,37 @@
+# This YAML exposes the fields defined in the UI. It can be edited directly or have new YAML pasted in.
+# Not all available Kubernetes properties are recognized by the form exposed in the UI, and unrecognized properties are ignored during import.
+# If the required properties are not supported by this step, the 'Deploy raw Kubernetes YAML' step can be used to deploy YAML directly to Kubernetes, and supports all properties.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: testrail
+  labels:
+    app: web
+spec:
+  selector:
+      matchLabels:
+      app.kubernetes.io/instance: harness-0293
+      app.kubernetes.io/name: testrail
+  replicas: 1
+  progressDeadlineSeconds: 600
+  strategy:
+    type: RollingUpdate
+  template:
+    spec:
+      containers:
+        - name: testrail
+          image: voilatiel/testrail
+          ports:
+            - containerPort: 80
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - web
+                topologyKey: kubernetes.io/hostname
