@@ -23,6 +23,7 @@ spec:
     matchLabels:
       octopusexport: OctopusExport
   replicas: 1
+  serviceName: testrail-bs-svc
   updateStrategy:
     type: RollingUpdate
   podManagementPolicy: OrderedReady
